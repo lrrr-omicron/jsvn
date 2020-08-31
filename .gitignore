@@ -23,7 +23,7 @@ build/Release
 
 # Dependency directories
 node_modules/
-jspm_packages/
+**/node_modules/
 
 # Optional npm cache directory
 .npm
@@ -38,3 +38,10 @@ jspm_packages/
 *.tgz
 
 
+# dist will contain the game built for distribution
+dist/
+
+# index.html is a built product
+index.html
+# bundle.js
+js/bundle.js

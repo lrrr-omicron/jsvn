@@ -1,15 +1,15 @@
 {
-  "name": "stage",
+  "name": "game",
   "version": "1.0.0",
   "private": true,
-  "description": "",
+  "description": "Controller",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "cash-js": "^1.0.2"
-  }
+  "keywords": [
+    "game"
+  ],
+  "author": "Lrrr Omicron",
+  "license": "ISC"
 }
