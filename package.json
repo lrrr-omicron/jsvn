@@ -1,0 +1,18 @@
+{
+  "name": "game",
+  "version": "1.0.0",
+  "description": "Game",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@server/~/game.git"
+  },
+  "keywords": [
+    "game"
+  ],
+  "author": "Lrrr Omicron",
+  "license": "ISC"
+}
