@@ -38,14 +38,14 @@ const showUiComponent = (where, which) => {
     return fatalError(msg);
   }
 
-  whichElt = document.getElementById(which);
+  let whichElt = document.getElementById(which);
 
   if (! whichElt ) {
     let msg = "NO SUCH PASSAGE MATCHING: " + which;
     return fatalError(msg);
   }
 
-  whereElt = document.getElementById(where);
+  let whereElt = document.getElementById(where);
   if (! whereElt ) {
     let msg = "NO SUCH DOCUMENT ENTITY MATCHING: " + where;
     return fatalError(msg);
