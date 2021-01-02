@@ -9,3 +9,6 @@ import stage from "./stage";
 //export it to the browser.
 window.stage=stage;
 
+import model from "./model";
+//export it to the browser.
+window.model=model;

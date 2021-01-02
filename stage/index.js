@@ -4,9 +4,11 @@
 
 import { $, $$ } from  'cash-js';
 
+import model from "../model";
 
 const onBodyLoad = () => {
   console.log("--> stage.onBodyLoad()");
+  game.load();
   showUiComponent("header-component", "header");
   showUiComponent("passage-component", "welcome");
   showUiComponent("footer-component", "footer");
@@ -25,10 +27,51 @@ const fatalError = (message, code) =>  {
 };
 
 
-const openSaveDialog = () => {
-  console.log("--> stage.openSaveDialog()" );
-  console.log("<-- stage.openSaveDialog()" );
+const saveModalComponentId = "save-modal-component";
+
+const openSaveModal = () => {
+  console.log("--> stage.openSaveModal()" );
+  showUiComponent("save-modal-component", "save");
+  let saveElt = document.getElementById(saveModalComponentId);
+
+  let saves = document.getElementById("saves");
+  let savesData = model.getSavesData();
+  console.log("Saves data:")
+  console.log(savesData);
+  for (let which = 0; which < savesData.length; which++ ) {
+    let dispWhich = which + 1;
+    let p = document.createElement("p");
+    let saveButton = document.createElement("button");
+    saveButton.id="save-" + which;
+    saveButton.innerHTML="Save " + dispWhich;
+    saveButton.onclick=function () { stage.doSave(which); };
+    p.appendChild(saveButton);
+    saves.appendChild(p);
+    saveElt.style.display = "block";
+  }
+  console.log("<-- stage.openSaveModal()" );
 };
+
+const doSave = (which) => {
+  console.log("--> stage.doSave(" + which +")" );
+  model.save(which);
+  closeSaveModal();
+  console.log("<-- stage.doSave("+ which + ")" );
+};
+
+const cancelSaveModal = () => {
+  console.log("--> stage.cancelSaveModal()" );
+  closeSaveModal();
+  console.log("<-- stage.cancelSaveModal()" );
+}
+
+const closeSaveModal = () => {
+  console.log("--> stage.cancelSaveModal()" );
+  let saveElt = document.getElementById(saveModalComponentId);
+  saveElt.style.display = 'none'; // close the dialog
+  console.log("<-- stage.cancelSaveModal()" );
+}
+
 
 const showUiComponent = (where, which) => {
   console.log("--> stage.showUiCompnent(" + where + ", " + which + ")");
@@ -59,4 +102,6 @@ const showUiComponent = (where, which) => {
 
 exports.onBodyLoad = onBodyLoad;
 exports.showPassage = showUiComponent;
-exports.openSaveDialog = openSaveDialog;
+exports.openSaveModal = openSaveModal;
+exports.doSave = doSave;
+exports.cancelSaveModal = cancelSaveModal;
