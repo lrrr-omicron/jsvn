@@ -48,4 +48,30 @@ This isn't really released yet.  I'm just sticking it here on github, but it's n
 
 So far I can type gulp and browserify takes the stuff from the htmls directory and main.html, and creates index.html which has all the js and the html components in divs.  
 
-body.onload ( from the index.html ) calls stage ( a view
+main.js creates window.g which is the namespace for all the javascript we write.
+main.js populates g with the functionality we need.
+body.onload ( from the index.html ) calls g.stage.onBodyLoad().  This sets up a new game db that can be saved or loaded.
+
+The model.db object ( g.model.db from the browser ) is the game that is being saved/loaded.  Whatever you store in that object is the 'game'.  
+
+I think rollback could be implemented by just keeping an array of db objects that change every time you do something that can be rolled back... 
+
+TODO:
+
+-- The alerts are ugly Proof of Concept tier.  The whole thing is ugly and POC tier. 
+
+-- New Game Button
+
+-- Exit ( are you sure? )
+
+Either need a dirty flag and a framework that updates it or...
+
+-- Rollback: each time a thing happens update a stack of copies of our db.  We can tell if something happened ( the current save is dirty ) if it differs from the current one.  ( can we serialize them both and compare the strings?  I think so )  This is wasteful in space - multiple copies of WHOLE frame of data not just changed data.  Perhaps this goes away if you close browser and reload from save.   This would be a limitation.
+  
+-- Fade in/out of passages to bring us up to twine level. 
+
+-- highlighting of buttons.  Better drawn buttons.  New game button. 
+
+-- I am thinking RenPy did the save modal dialog right.  Copy it.  It covers the entire area of the window and is the same shape. Covering the whole area eliminates confusion about modal-ness and wastes no screen real estate ( which will be useful on phones )  Add music/effects prefs.
+
+
