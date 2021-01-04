@@ -2,11 +2,8 @@
 //index.js
 // This will be the model.
 
-// I'm going to just have db be a relational database with no backing or indexing or enforcement of relational-ness, or uniqueness.  Not an SQL database, just 
-// a normalized database we're used to working with and which won't bite us 
-// later.
-// we load all the 'tables' which will be lists of javascript 'objects'.  
-// we can persist the whole thing as json if we want but for now I'm just using // localStorage.
+// The 'db' is just a javascript data structure.
+// For now I'm just using localStorage to persist the serialized text.
 //
 import shared from '../shared';
 

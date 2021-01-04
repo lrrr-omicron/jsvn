@@ -1,1 +1,51 @@
-This is a README file.
+This is totally a WIP and unreleased.  
+
+The design may change or this project may be abandoned at any time!
+
+Basically I wanted to write a visual novel.  
+
+The first software I tried was RPG Maker.
+ Pro: javascript and hackable
+ Pro: comes with lots of pre-made art
+
+ Con: complexity can be limiting when you go to hack/monkeypatch the innards. 
+ Con: unless you want an 'rpg maker' style game, this complexity gets in your way - and even if you do, it makes it hard to hack.  A clothing system for the little walker sprites that layered clothing took forever to implement, and I could see making the sprites interact was going to be hard and inconvenient.  Too many features to makework together, and too many hooks into the editor GUI.
+ Con: have to run Windows to develop.  It would almost work on Wine, but the license key wouldn't.  Although it's easy to make RPG Maker MV games run on Linux, because all the developers are using Windows, they barely ever do.
+ Con: asking players to trust an executable ( if distributed that way )
+ Con: I am not an artist.  Adding something to that style of game requires too much art so that it looks the same.  Too many icons etc.  I want to write more of a text based game with some simple pictures, little minigames maybe etc.  RPG Maker does alot for you, but then you have to keep that up, which is more than I want to do.  
+
+The next software I tried was Twine.
+  Pro: Get up and running fast
+  Pro: distribute as an HTML file.
+  
+  Con: Infrastructure gets in way hindering extensibility.  
+  Con: Seemingly the new versions of Twine can't read local images due to security?  
+  Con: Geared toward new users.  Twee seems ok, but the above security issue, and bugs writing tags for SugarCube ( I wanted tags that would parse my English and color what was in quotes according to the character speaking - and they almost worked - almost - but they never quite did ) seemed to be due to making too many things work together many of which were obscure or hardly documented.  
+
+The next software I looked at was Ren'py.
+  Pro: Lots of great games already made for it.
+  Pro: Works on Windows or Linux
+  Pro: Mature, already written 
+
+  Con: Python - not a bad language, but would rather learn node and javascript as it works both server side and client side in browser. 
+  Con: Asking players to trust an executable.
+
+
+So I am rolling my own game using javascript.
+
+What I am checking in here is going to be a skeleton rather than a game.  This is for the stuff that should be reusable across games.
+  Pro: I am in total control.
+  Pro: get to learn node/javascript - skills acquired transferrable.  
+  Pro: I will distribute an html along with it's needed resources.  No security woes.  I don't need resources packed into the html.  I'm fine distributing a zip with an index.html, and css/images
+  Pro: Can separate passages into seperate files as in Twine/Twee, and they get put into one master html so they are available in the DOM using browserify/and gulp.  Because they are already loaded after body onload I don't have to worry about waiting for them to load simplifying the code. 
+  Pro: I want the best of Twine, and Javascript can do anything Python can do.
+
+  Con: localStorage is limited to 5MB.  This means all the saves can only be this big taken together. Savedata for games should be pretty small, but Ren'Py has screenshots on it's save screen which I don't think I'll be able to match using javascript as the screenshots would fill up localStorage.  Most other things should be fine though.
+  Con: I have to write this myself, meaning I am not writing a visual novel, but the framework for it.
+
+
+This isn't really released yet.  I'm just sticking it here on github, but it's not usable.
+
+So far I can type gulp and browserify takes the stuff from the htmls directory and main.html, and creates index.html which has all the js and the html components in divs.  
+
+body.onload ( from the index.html ) calls stage ( a view
