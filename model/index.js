@@ -7,6 +7,8 @@
 // later.
 // we load all the 'tables' which will be lists of javascript 'objects'.  
 // we can persist the whole thing as json if we want but for now I'm just using // localStorage.
+//
+import shared from '../shared';
 
 let serialize = require('serialize-javascript');
 const deserialize = (str) => {
@@ -15,34 +17,22 @@ const deserialize = (str) => {
   return eval(str);
 };
 
-let lastSaveIndexStr = localStorage.getItem("lastSaveIndex");
-let lastSaveIndex = 0;
-if (lastSaveIndexStr) {
-  lastSaveIndex = deserialize(lastSaveIndexStr); 
-  if (!lastSaveIndex) { 
-    lastSaveIndex = 0;
-  }
-  localStorage.lastSaveIndex = serialize(lastSaveIndex);
-}
-
-
-
 const getSavesData = () => {
   if (localStorage.getItem("saves") == null ) {
-    initSavesData(4); 
+    throw new Error("no saves in local storage");
   }
   return deserialize(localStorage.saves);
 };
 
-const initSavesData = (howMany) => {
+const initSavesSlots = (howMany) => {
   let saves = new Array(howMany);
   for ( let i = 0; i < howMany; i++) {
-    saves[i] = initSaveData(i, null);
+    saves[i] = null;
   }
   console.log("Saves:");
   console.log(saves);
   localStorage.setItem("saves", serialize(saves) );
-}
+};
 
 const initSaveData = (saveIndex, saveDate) => {
   return {
@@ -52,27 +42,45 @@ const initSaveData = (saveIndex, saveDate) => {
 };
 
 
-let db = initSaveData(lastSaveIndex,new Date());
+let db = null;
+
+const getNewestSavedSlot = (saves) => {
+  let slot = null;
+  if (!saves) { return slot;}
+  let latestDate = null;
+  for (let i = 0; i < saves.length; i++ ) {
+    let save = saves[i];
+    if (save != null) {
+      let saveDate = save.saveDate;
+      if( !latestDate || latestDate < saveDate ) {
+        latestDate = saveDate;
+        slot = i;
+      }
+    }
+  }
+  return slot; 
+};	
 
 const init = () => {
   console.log("--> model.init()");
   // initialize local storage array of saves.
   if (localStorage.getItem("saves") == null ) {
-    localStorage.setItem("saves", serialize([]) );
+    initSavesSlots(shared.SAVE_SLOTS);
   }
   console.log("<-- model.init()");
 };
+init();
 
+const newDb = () => {
+  console.log("--> model.newDb()");
+  db = initSaveData(null,null);
+  console.log("<-- model.newDb()");
+}
 
 const load = (which) => {
   console.log("--> model.load(" + which + ")");
   if (which == null) {
     throw new RangeError("Null passed for save slot to load");
-  }
-
-  if (!localStorage.saves) {
-    console.log("No existing saves");
-    init();
   }
 
   let saves = deserialize(localStorage.saves);
@@ -88,25 +96,23 @@ const load = (which) => {
 const save = (which) => {
   console.log("--> model.save(" + which + ")");
   if (which == null) {
-    console.log("Null passed for save slot to load");
-    init();
+    throw new Error("Null passed for save slot to load");
   }
 
   if (!localStorage.saves) {
-    console.log("No existing saves");
-    init();
+    throw new Error("No existing saves");
   }
+
+  // saves is ALL saves
   let saves = deserialize(localStorage.saves);
   console.log("Saving db into slot: " + which );
 
   db.saveIndex = which; 
   db.saveDate = new Date(); 
   saves[which] = db; 
-  lastSaveIndex = which;
 
   console.log("Slot " + which + "saved.");
   localStorage.saves = serialize(saves);
-  localStorage.lastSavedIndex = serialize(lastSaveIndex);
   console.log("<-- model.save(" + which + ")");
 };
 
@@ -115,25 +121,20 @@ const deleteSave = (which) => {
   if (which == null) { throw new RangeError("Null passed for save slot to delete"); }
 
   if (!localStorage.saves) {
-    console.log("No existing saves");
-    init();
+    throw new Error("No existing saves");
   }
   let saves = deserialize(localStorage.saves);
   console.log("Deleting save db from slot: " + which );
 
   saves[which] = null; 
-  if ( lastSaveIndex == which ) {
-    lastSaveIndex = null;
-  } 
   console.log("Deleted slot " + which + ".");
   localStorage.saves = serialize(saves);
-  localStorage.lastSavedIndex = serialize(lastSaveIndex);
   console.log("<-- model.deleteSave(" + which + ")");
 };
 
-
+exports.newDb = newDb;
+exports.getNewestSavedSlot = getNewestSavedSlot;
 exports.getSavesData = getSavesData;
-exports.init = init;
 exports.load = load;
 exports.save = save;
 exports.deleteSave = deleteSave;

@@ -33,6 +33,7 @@
     "vinyl-source-stream": "^2.0.0"
   },
   "dependencies": {
+    "cash-js": "^1.0.2",
     "npx": "^10.2.2"
   }
 }

@@ -1,14 +1,24 @@
 // main.js
 'use strict';
 
+window.g = {};
+
 import game from "./game";
 //export it to the browser.
-window.game=game;
+window.g.game=game;
 
 import stage from "./stage";
 //export it to the browser.
-window.stage=stage;
+window.g.stage=stage;
+
+import save from "./save";
+//export it to the browser.
+window.g.save=save;
+
+import load from "./load";
+//export it to the browser.
+window.g.load=load;
 
 import model from "./model";
 //export it to the browser.
-window.model=model;
+window.g.model=model;
