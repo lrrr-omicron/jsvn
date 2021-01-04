@@ -56,6 +56,14 @@ The model.db object ( g.model.db from the browser ) is the game that is being sa
 
 I think rollback could be implemented by just keeping an array of db objects that change every time you do something that can be rolled back... 
 
+I haven't cloned this and tried to get it working anew, but basically when everything is working and npm installed with gulp and npm and browserify development is:
+
+Make change
+
+$ gulp
+$ firefox index.html # enjoy playing your 'game'
+
+
 TODO:
 
 -- The alerts are ugly Proof of Concept tier.  The whole thing is ugly and POC tier. 
