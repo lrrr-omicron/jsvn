@@ -43,7 +43,10 @@ const createLoadButton = (which,savesData) => {
   loadButton.id="load-" + which;
   let saveDateText = shared.getSaveDateText(saveData); // returns --/--/-- --:--:-- if null
   loadButton.innerHTML="Load save: " + dispWhich + " made at: " + saveDateText;
-  loadButton.onclick=function () { g.game.load(which); };
+  loadButton.onclick=function () { 
+    closeLoadModal();
+    g.game.load(which);
+  };
   if ( saveData && saveData.saveDate ) {
     loadButton.disabled = false;
   } else {

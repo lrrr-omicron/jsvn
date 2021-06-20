@@ -71,6 +71,7 @@ init();
 const newDb = () => {
   console.log("--> model.newDb()");
   db = initSaveData(null,null);
+  setCurrentPassage("welcome");
   console.log("<-- model.newDb()");
 }
 
@@ -113,6 +114,14 @@ const save = (which) => {
   console.log("<-- model.save(" + which + ")");
 };
 
+const getCurrentPassage = () => {
+  return db.currentPassage;
+};
+
+const setCurrentPassage = (passage) => {
+  db.currentPassage = passage;
+};
+
 const deleteSave = (which) => {
   console.log("--> model.deleteSave(" + which + ")");
   if (which == null) { throw new RangeError("Null passed for save slot to delete"); }
@@ -136,3 +145,5 @@ exports.load = load;
 exports.save = save;
 exports.deleteSave = deleteSave;
 exports.db = db; // the currently loaded game
+exports.getCurrentPassage = getCurrentPassage; 
+exports.setCurrentPassage = setCurrentPassage; 

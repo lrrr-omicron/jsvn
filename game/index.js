@@ -4,6 +4,7 @@
 
 
 import model from "../model";
+import stage from "../stage";
 
 const load = (whichSlot) => {
   console.log("--> game.load(" + whichSlot + ")");
@@ -13,7 +14,8 @@ const load = (whichSlot) => {
   }
   if (slot != null) {
     model.load(slot);
-    console.log("<-- game.load" + whichSlot + ")");
+    goToPassage(model.getCurrentPassage());
+    console.log("<-- game.load(" + whichSlot + ")");
     return;
   }
   console.log("there were no saved games, creating new game" );
@@ -39,6 +41,15 @@ const newGame = () => {
   console.log("<-- game.newGame()");
 };
 
+const goToPassage = (which) => {
+  console.log("--> game.goToPassage("+ which + ")");
+  model.setCurrentPassage(which);
+  stage.showPassage('passage-component', which);
+  console.log("<-- game.goToPassage(" + which + ")");
+};
+
+
 exports.load = load;
 exports.save = save;
 exports.deleteSave = deleteSave;
+exports.goToPassage = goToPassage;
